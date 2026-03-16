@@ -19,9 +19,7 @@ import cityrescue.exceptions.InvalidUnitException;
 public class CityRescueImpl implements CityRescue {
 
     // TODO: add fields (map, arrays for stations/units/incidents, counters, tick, etc.)
-    private String[][] map;
-    private int width;
-    private int height;
+    private CityMap map;
     @Override
     public void initialise(int width, int height) throws InvalidGridException {
         // TODO: implement
@@ -29,31 +27,33 @@ public class CityRescueImpl implements CityRescue {
             throw new InvalidGridException("Invalid Width or Height");
         } 
 
-        map = new String[height][width];
-        this.width = width;
-        this.height = height;
+        map = new CityMap(width, height);
     }
 
     @Override
     public int[] getGridSize() {
         // TODO: implement
-        return new int[] {width, height};
+        return new int[] {map.getWidth(), map.getHeight()};
     }
 
     @Override
     public void addObstacle(int x, int y) throws InvalidLocationException {
         // TODO: implement
-        if (x >= width || x < 0 || y >= height || y < 0) {
+        if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {
             throw new InvalidLocationException("Invalid inputted location");
         }
 
-        map[y][x] = "obstacle";
+        map.addObstacle(x, y);
     }
 
     @Override
     public void removeObstacle(int x, int y) throws InvalidLocationException {
         // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {
+            throw new InvalidLocationException("Invalid inputted location");
+        }
+
+        map.removeObstacle(x, y);
     }
 
     @Override
