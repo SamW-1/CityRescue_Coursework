@@ -59,7 +59,14 @@ public class CityRescueImpl implements CityRescue {
     @Override
     public int addStation(String name, int x, int y) throws InvalidNameException, InvalidLocationException {
         // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (name == null || name == "") { throw new InvalidNameException("Inputted Name is blank"); }
+        if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {
+            throw new InvalidLocationException("Invalid inputted location");
+        }
+        
+        Station newStation = new Station(name);
+        map.addStation(newStation, x, y);
+        return newStation.getStationID();
     }
 
     @Override

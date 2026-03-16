@@ -2,8 +2,7 @@ package cityrescue;
 
 public class CityMap {
     private String[][] map;
-    private int width;
-    private int height;
+    private int width, height;
     public CityMap(int width, int height) {
         map = new String[height][width];
         this.width = width;
@@ -16,5 +15,12 @@ public class CityMap {
     }
     public void removeObstacle(int x, int y) {
         map[y][x] = null;
+    }
+    public void addStation(Station station, int x, int y) {
+        map[y][x] = Integer.toString(station.getStationID());
+    }
+    public boolean locationBlocked(int x, int y) {
+        if (map[y][x] == null) { return false; }
+        return true;
     }
 }
