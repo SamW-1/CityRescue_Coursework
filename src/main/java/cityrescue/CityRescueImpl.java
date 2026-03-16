@@ -19,7 +19,9 @@ import cityrescue.exceptions.InvalidUnitException;
 public class CityRescueImpl implements CityRescue {
 
     // TODO: add fields (map, arrays for stations/units/incidents, counters, tick, etc.)
-    private int[][] map;
+    private String[][] map;
+    private int width;
+    private int height;
     @Override
     public void initialise(int width, int height) throws InvalidGridException {
         // TODO: implement
@@ -27,19 +29,25 @@ public class CityRescueImpl implements CityRescue {
             throw new InvalidGridException("Invalid Width or Height");
         } 
 
-        map = new int[height][width];
+        map = new String[height][width];
+        this.width = width;
+        this.height = height;
     }
 
     @Override
     public int[] getGridSize() {
         // TODO: implement
-        return new int[] {map[0].length, map.length};
+        return new int[] {width, height};
     }
 
     @Override
     public void addObstacle(int x, int y) throws InvalidLocationException {
         // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (x >= width || x < 0 || y >= height || y < 0) {
+            throw new InvalidLocationException("Invalid inputted location");
+        }
+
+        map[y][x] = "obstacle";
     }
 
     @Override
