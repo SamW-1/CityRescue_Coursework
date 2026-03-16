@@ -10,6 +10,7 @@ import cityrescue.exceptions.InvalidNameException;
 import cityrescue.exceptions.InvalidSeverityException;
 import cityrescue.exceptions.InvalidUnitException;
 
+
 /**
  * CityRescueImpl (Starter)
  *
@@ -20,6 +21,8 @@ public class CityRescueImpl implements CityRescue {
 
     // TODO: add fields (map, arrays for stations/units/incidents, counters, tick, etc.)
     private CityMap map;
+    private Station[] stations = new Station[100];
+    private int stationCount = 0;
     @Override
     public void initialise(int width, int height) throws InvalidGridException {
         // TODO: implement
@@ -63,16 +66,18 @@ public class CityRescueImpl implements CityRescue {
         if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {
             throw new InvalidLocationException("Invalid inputted location");
         }
-        
+
         Station newStation = new Station(name);
         map.addStation(newStation, x, y);
+        stations[stationCount] = newStation;
+        stationCount++;
         return newStation.getStationID();
     }
 
     @Override
     public void removeStation(int stationId) throws IDNotRecognisedException, IllegalStateException {
         // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        
     }
 
     @Override
