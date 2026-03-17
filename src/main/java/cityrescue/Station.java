@@ -5,8 +5,8 @@ public class Station {
     public static int stationsCount = 0;
     private int stationID;
     private String name;
-    private Unit[] units = new Unit[100];
-    private int unitsCount = 0;
+    private Unit[] units;
+    public int unitsCount = 0;
     public Station(String name) {
         this.name = name;
         stationID = totalID;
@@ -28,5 +28,16 @@ public class Station {
             if (st.getStationID() == id) { return st; }
         }
         return stations[99];
+    }
+    public static int[] getStationIDs() { 
+        int[] IDs = new int[stationsCount];
+        for (int i = 0; i < stationsCount; i++) {
+            IDs[i] = stations[i].getStationID();
+        }
+        return IDs;
+    }
+    public void setStationCapacity(int cap) {
+        // Assume station capacity is only set once at the start since units will be set to empty Arr
+        units = new Unit[cap];
     }
 }
