@@ -95,7 +95,7 @@ public class CityRescueImpl implements CityRescue {
     @Override
     public int[] getStationIds() {
         // TODO: implement
-        
+        return Station.getStationIDs();
     }
 
     @Override
