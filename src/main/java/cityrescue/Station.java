@@ -40,4 +40,8 @@ public class Station {
         // Assume station capacity is only set once at the start since units will be set to empty Arr
         units = new Unit[cap];
     }
+    public boolean hasCapacity() {
+        if (unitsCount < units.length-1) { return true; }
+        return false;
+    }
 }

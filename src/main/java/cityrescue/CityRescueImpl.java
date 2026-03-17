@@ -97,14 +97,23 @@ public class CityRescueImpl implements CityRescue {
         // TODO: implement
         return Station.getStationIDs();
     }
-
+    // CURRENTLY WORKING ON
     @Override
     public int addUnit(int stationId, UnitType type) throws IDNotRecognisedException, InvalidUnitException, IllegalStateException {
         // TODO: implement
         if (!Station.isStation(stationId)) { throw new IDNotRecognisedException("Station does not exist"); }
         Station station = Station.getStation(stationId);
         if (type == null) { throw new InvalidUnitException("Unit does not exist"); }
-        
+        if (!station.hasCapacity()) { throw new IllegalStateException("Station doesn't have capacity"); }
+
+        switch (type) {
+            case AMBULANCE:
+                // Create Ambulance Object
+            case POLICE_CAR:
+                // Create PoliceCar object
+            case FIRE_ENGINE:
+                // Create FirEngine object
+        }
     }
 
     @Override
