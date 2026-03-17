@@ -26,7 +26,7 @@ public class CityMap {
     public void removeStation(int stationID) {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (map[i][j] == Integer.toString(stationID)) { map[i][j] = null; }
+                if (map[i][j].equals(Integer.toString(stationID))) { map[i][j] = null; }
             }
         }
     }
