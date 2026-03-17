@@ -21,8 +21,6 @@ public class CityRescueImpl implements CityRescue {
 
     // TODO: add fields (map, arrays for stations/units/incidents, counters, tick, etc.)
     private CityMap map;
-    private Station[] stations = new Station[100];
-    private int stationCount = 0;
     @Override
     public void initialise(int width, int height) throws InvalidGridException {
         // TODO: implement
@@ -69,15 +67,19 @@ public class CityRescueImpl implements CityRescue {
 
         Station newStation = new Station(name);
         map.addStation(newStation, x, y);
-        stations[stationCount] = newStation;
-        stationCount++;
+        Station.stations[Station.stationsCount] = newStation;
+        Station.stationsCount++;
         return newStation.getStationID();
     }
 
     @Override
     public void removeStation(int stationId) throws IDNotRecognisedException, IllegalStateException {
         // TODO: implement
-        
+        if (!Station.isStation(stationId)) { throw new IDNotRecognisedException("Station does not exist"); }
+        Station station = Station.getStation(stationId);
+        if (station.hasUnits()) { throw new IllegalStateException("Station still owns units"); }
+
+        map.removeStation(stationId);
     }
 
     @Override
