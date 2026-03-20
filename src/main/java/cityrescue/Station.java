@@ -44,4 +44,8 @@ public class Station {
         if (unitsCount < units.length-1) { return true; }
         return false;
     }
+    public void addUnit(Unit unit) {
+        units[unitsCount] = unit;
+        unitsCount++;
+    }
 }
