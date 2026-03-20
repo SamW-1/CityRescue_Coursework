@@ -1,6 +1,7 @@
 package cityrescue;
 
 import cityrescue.enums.IncidentType;
+import cityrescue.enums.UnitStatus;
 import cityrescue.enums.UnitType;
 import cityrescue.exceptions.IDNotRecognisedException;
 import cityrescue.exceptions.InvalidCapacityException;
@@ -97,7 +98,6 @@ public class CityRescueImpl implements CityRescue {
         // TODO: implement
         return Station.getStationIDs();
     }
-    // CURRENTLY WORKING ON
     @Override
     public int addUnit(int stationId, UnitType type) throws IDNotRecognisedException, InvalidUnitException, IllegalStateException {
         // TODO: implement
@@ -120,13 +120,18 @@ public class CityRescueImpl implements CityRescue {
                 throw new InvalidUnitException("Unit does not exist");
         }
         station.addUnit(unit);
+        Unit.addUnit(unit);
         return unit.getID();
     }   
 
     @Override
     public void decommissionUnit(int unitId) throws IDNotRecognisedException, IllegalStateException {
         // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (!Unit.isUnit(unitId)) { throw new IDNotRecognisedException("Unit does not exist"); }
+        Unit unit = Unit.getUnit(unitId);
+        if (unit.status == UnitStatus.EN_ROUTE || unit.status == UnitStatus.AT_SCENE) { throw new IllegalStateException("Unit either EN_ROUTE or AT_SCENE"); }
+
+        unit.status = UnitStatus.OUT_OF_SERVICE;
     }
 
     @Override

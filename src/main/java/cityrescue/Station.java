@@ -27,7 +27,7 @@ public class Station {
         for (Station st : stations) {
             if (st.getStationID() == id) { return st; }
         }
-        return stations[99];
+        return null;
     }
     public static int[] getStationIDs() { 
         int[] IDs = new int[stationsCount];

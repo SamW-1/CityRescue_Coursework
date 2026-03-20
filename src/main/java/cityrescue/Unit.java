@@ -6,6 +6,7 @@ import cityrescue.enums.UnitStatus;
 
 abstract class Unit {
     private static int totalIDs = 1;
+    private static Unit[] unitList = new Unit[100];
     private final int unitID;
     public UnitStatus status;
     protected final int ticksAtScene;
@@ -21,4 +22,17 @@ abstract class Unit {
     public abstract boolean canHandle(IncidentType type);
     public abstract int getTicksToResolve(int severity);
     public int getID() { return unitID; }
+    public static void addUnit(Unit unit) { unitList[totalIDs-1] = unit; }
+    public static boolean isUnit(int ID) {
+        for (Unit unit : unitList) {
+            if (unit.getID() == ID) { return true; }
+        }
+        return false;
+    }
+    public static Unit getUnit(int ID) {
+        for (Unit unit : unitList) {
+            if (unit.getID() == ID) { return unit; }
+        }
+        return null;
+    }
 }
