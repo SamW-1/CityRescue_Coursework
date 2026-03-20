@@ -68,8 +68,7 @@ public class CityRescueImpl implements CityRescue {
 
         Station newStation = new Station(name);
         map.addStation(newStation, x, y);
-        Station.stations[Station.stationsCount] = newStation;
-        Station.stationsCount++;
+        Station.addStation(newStation);
         return newStation.getStationID();
     }
 

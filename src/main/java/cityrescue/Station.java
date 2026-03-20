@@ -1,8 +1,7 @@
 package cityrescue;
 public class Station {
     static int totalID = 1;
-    public static Station[] stations = new Station[100];
-    public static int stationsCount = 0;
+    private static Station[] stationList = new Station[100];
     private int stationID;
     private String name;
     private Unit[] units;
@@ -14,25 +13,26 @@ public class Station {
     }
     public int getStationID() { return stationID; }
     public static boolean isStation(int id) { 
-        for (Station st : stations) {
+        for (Station st : stationList) {
             if (st.getStationID() == id) { return true; }
         }    
         return false;
     }
+    public static void addStation(Station station) { stationList[totalID-1] = station; }
     public boolean hasUnits() { 
         if (unitsCount == 0) { return false; }
         return true;
     }
     public static Station getStation(int id) { 
-        for (Station st : stations) {
+        for (Station st : stationList) {
             if (st.getStationID() == id) { return st; }
         }
         return null;
     }
     public static int[] getStationIDs() { 
-        int[] IDs = new int[stationsCount];
-        for (int i = 0; i < stationsCount; i++) {
-            IDs[i] = stations[i].getStationID();
+        int[] IDs = new int[totalID-1];
+        for (int i = 0; i < totalID-1; i++) {
+            IDs[i] = stationList[i].getStationID();
         }
         return IDs;
     }
