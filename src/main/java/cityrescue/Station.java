@@ -29,6 +29,12 @@ public class Station {
         }
         return null;
     }
+    public static Station getStation(Unit unit) { 
+        for (Station st : stationList) {
+            if (st.hasUnit(unit)) { return st; }
+        }
+        return null;
+    }
     public static int[] getStationIDs() { 
         int[] IDs = new int[totalID-1];
         for (int i = 0; i < totalID-1; i++) {
@@ -44,8 +50,31 @@ public class Station {
         if (unitsCount < units.length-1) { return true; }
         return false;
     }
+    public boolean hasUnit(Unit unit) {
+        for (Unit elem : units) {
+            if (elem == unit) { return true; }
+        }
+        return false;
+    }
     public void addUnit(Unit unit) {
         units[unitsCount] = unit;
         unitsCount++;
+    }
+    public void removeUnit(Unit unit) {
+        for (Unit i : units) {
+            if (i == unit) { i = null; }
+        }
+
+        for (int i = 0; i < units.length-1; i++) {
+            if (units[i] == null) {
+                if (units[i+1] != null) {
+                    units[i] = units[i+1];
+                    units[i+1] = null;
+                }
+                else {
+                    break;
+                }
+            }
+        }
     }
 }

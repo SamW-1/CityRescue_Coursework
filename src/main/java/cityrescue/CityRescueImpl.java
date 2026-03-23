@@ -130,8 +130,9 @@ public class CityRescueImpl implements CityRescue {
         Unit unit = Unit.getUnit(unitId);
         if (unit.status == UnitStatus.EN_ROUTE || unit.status == UnitStatus.AT_SCENE) { throw new IllegalStateException("Unit either EN_ROUTE or AT_SCENE"); }
 
-        // PROBABLY ALSO NEED TO ADD FUNCTIONALITY TO REMOVE UNIT FROM ITS STATION OBJECT
         unit.status = UnitStatus.OUT_OF_SERVICE;
+        Station station = Station.getStation(unit);
+        station.removeUnit(unit);
     }
 
     @Override
