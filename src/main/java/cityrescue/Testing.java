@@ -31,9 +31,9 @@ public class Testing {
 
         /**
          * Compile and execution commands for this file:
-         * PS C:\Users\samue\Documents\EXCSYear1\Object Oriented Programming\CityRescue_Coursework\src\main\java> javac cityrescue/Testing.java
+         * javac cityrescue/Testing.java
 >> 
-            PS C:\Users\samue\Documents\EXCSYear1\Object Oriented Programming\CityRescue_Coursework\src\main\java> java cityrescue.Testing   
+            java cityrescue.Testing   
 
 
             File Path dependent on local storage

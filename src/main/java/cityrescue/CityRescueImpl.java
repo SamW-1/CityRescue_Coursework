@@ -138,7 +138,17 @@ public class CityRescueImpl implements CityRescue {
     @Override
     public void transferUnit(int unitId, int newStationId) throws IDNotRecognisedException, IllegalStateException {
         // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (!Unit.isUnit(unitId)) { throw new IDNotRecognisedException("Unit does not exist"); }
+        if (!Station.isStation(newStationId)) { throw new IDNotRecognisedException("Station does not exist"); }
+
+        Unit unit = Unit.getUnit(unitId);
+        Station newStation = Station.getStation(newStationId);
+        Station oldStation = Station.getStation(unit);
+
+        if (unit.status != UnitStatus.IDLE) { throw new IllegalStateException("Unit is not IDLE"); }
+        if (!newStation.hasCapacity()) { throw new IllegalStateException("New station does not have capacity"); }
+
+        
     }
 
     @Override
