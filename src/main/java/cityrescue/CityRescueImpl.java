@@ -148,13 +148,19 @@ public class CityRescueImpl implements CityRescue {
         if (unit.status != UnitStatus.IDLE) { throw new IllegalStateException("Unit is not IDLE"); }
         if (!newStation.hasCapacity()) { throw new IllegalStateException("New station does not have capacity"); }
 
-        
+        oldStation.removeUnit(unit);
+        newStation.addUnit(unit);
     }
 
     @Override
     public void setUnitOutOfService(int unitId, boolean outOfService) throws IDNotRecognisedException, IllegalStateException {
-        // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (!Unit.isUnit(unitId)) { throw new IDNotRecognisedException("Unit does not exist"); }
+
+        Unit unit = Unit.getUnit(unitId);
+
+        if (outOfService && unit.status != UnitStatus.IDLE) { throw new IllegalStateException("Unit must be IDLE to toggle out of Service"); }
+
+        unit.status = UnitStatus.OUT_OF_SERVICE;
     }
 
     @Override
