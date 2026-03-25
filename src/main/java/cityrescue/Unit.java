@@ -22,6 +22,13 @@ abstract class Unit {
     public abstract boolean canHandle(IncidentType type);
     public abstract int getTicksToResolve(int severity);
     public int getID() { return unitID; }
+    public static int[] getUnitIDs() {
+        int[] IDs = new int[totalID];
+        for (int i = 0; i < totalID; i++) {
+            IDs[i] = unitList[i].getID();
+        }
+        return IDs;
+    }
     public static void addUnit(Unit unit) { unitList[totalID-1] = unit; }
     public static boolean isUnit(int ID) {
         for (Unit unit : unitList) {

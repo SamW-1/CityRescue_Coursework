@@ -165,8 +165,7 @@ public class CityRescueImpl implements CityRescue {
 
     @Override
     public int[] getUnitIds() {
-        // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Unit.getUnitIDs();
     }
 
     @Override
