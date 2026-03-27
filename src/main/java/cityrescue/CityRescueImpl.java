@@ -59,12 +59,10 @@ public class CityRescueImpl implements CityRescue {
     }
 
     @Override
-    public int addStation(String name, int x, int y) throws InvalidNameException, InvalidLocationException {
+    public int addStation(String name, int x, int y) throws InvalidNameException, InvalidLocationException, CapacityExceededException {
         // TODO: implement
         if (name == null || name.isBlank()) { throw new InvalidNameException("Inputted Name is blank"); }
-        if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {
-            throw new InvalidLocationException("Invalid inputted location");
-        }
+        if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {throw new InvalidLocationException("Invalid inputted location");}
         if (Station.totalID >= Station.MAX_STATIONS) { throw new CapacityExceededException("Max Stations exceeded"); }
 
 
@@ -100,7 +98,7 @@ public class CityRescueImpl implements CityRescue {
         return Station.getStationIDs();
     }
     @Override
-    public int addUnit(int stationId, UnitType type) throws IDNotRecognisedException, InvalidUnitException, IllegalStateException {
+    public int addUnit(int stationId, UnitType type) throws IDNotRecognisedException, InvalidUnitException, IllegalStateException, CapacityExceededException {
         // TODO: implement
         if (!Station.isStation(stationId)) { throw new IDNotRecognisedException("Station does not exist"); }
         Station station = Station.getStation(stationId);
@@ -177,17 +175,21 @@ public class CityRescueImpl implements CityRescue {
         if (!Unit.isUnit(unitId)) { throw new IDNotRecognisedException("Unit does not exist"); }
 
         Unit unit = Unit.getUnit(unitId);
+        int[] location = unit.getLocation();
         Station station = Station.getStation(unit);
 
         String returnString = "U#%d TYPE=%S HOME=%d LOC=(%d,%d) STATUS=%S INCIDENT=%d WORK=%d";
 
-        return String.format(returnString, unit.getID(), unit.getUnitType().toString()), station.getStationID(), ; 
+        // NEED TO ADD INCIDENT INFORMATION: come back once incident class and functionality has been implemented
+        return String.format(returnString, unit.getID(), unit.getUnitType().toString()), station.getStationID(), location[0], location[1], unit.status.toString(); 
     }
 
     @Override
     public int reportIncident(IncidentType type, int severity, int x, int y) throws InvalidSeverityException, InvalidLocationException {
-        // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (type == null) { throw new InvalidSeverityException("Type is null"); }
+        if (severity < 1 || severity > 5) { throw new InvalidSeverityException("Severity must be between 1 and 5"); }
+        if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {throw new InvalidLocationException("Invalid inputted location");}
+            
     }
 
     @Override

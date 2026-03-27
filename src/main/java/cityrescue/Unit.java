@@ -27,6 +27,7 @@ abstract class Unit {
     public abstract int getTicksToResolve(int severity);
     public abstract UnitType getUnitType();
     public int getID() { return unitID; }
+    public int[] getLocation() { return location; }
     public static int[] getUnitIDs() {
         int[] IDs = new int[totalID];
         for (int i = 0; i < totalID; i++) {
