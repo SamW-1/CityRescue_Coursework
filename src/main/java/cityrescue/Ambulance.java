@@ -4,8 +4,8 @@ import cityrescue.enums.IncidentType;
 import cityrescue.enums.UnitType;
 
 class Ambulance extends Unit {
-    public Ambulance() {
-        super(2);
+    public Ambulance(int[] location) {
+        super(2, location);
     }
     @ Override
     public boolean canHandle(IncidentType type) {

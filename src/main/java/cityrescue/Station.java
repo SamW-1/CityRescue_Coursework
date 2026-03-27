@@ -7,11 +7,14 @@ public class Station {
     private int stationID;
     private String name;
     private Unit[] units;
+    private int[] location;
     public int unitsCount = 0;
-    public Station(String name) {
+    public Station(String name, int x, int y) {
         this.name = name;
         stationID = totalID;
         totalID++;
+        location[0] = x;
+        location[1] = y;
     }
     public int getStationID() { return stationID; }
     public static boolean isStation(int id) { 
@@ -44,6 +47,7 @@ public class Station {
         }
         return IDs;
     }
+    public int[] getLocation() { return location; }
     public void setStationCapacity(int cap) {
         // Assume station capacity is only set once at the start since units will be set to empty Arr
         units = new Unit[cap];

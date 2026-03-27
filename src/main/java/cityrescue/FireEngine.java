@@ -4,8 +4,8 @@ import cityrescue.enums.IncidentType;
 import cityrescue.enums.UnitType;
 
 class FireEngine extends Unit {
-    public FireEngine() {
-        super(4);
+    public FireEngine(int[] location) {
+        super(4, location);
     }
     @ Override
     public boolean canHandle(IncidentType type) {

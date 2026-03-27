@@ -68,7 +68,7 @@ public class CityRescueImpl implements CityRescue {
         if (Station.totalID >= Station.MAX_STATIONS) { throw new CapacityExceededException("Max Stations exceeded"); }
 
 
-        Station newStation = new Station(name);
+        Station newStation = new Station(name, x, y);
         map.addStation(newStation, x, y);
         Station.addStation(newStation);
         return newStation.getStationID();
@@ -106,18 +106,18 @@ public class CityRescueImpl implements CityRescue {
         Station station = Station.getStation(stationId);
         if (!station.hasCapacity()) { throw new IllegalStateException("Station doesn't have capacity"); }
         if (Unit.totalID >= Unit.MAX_UNITS) { throw new CapacityExceededException("Max Units exceeded"); }
-
+        int[] location = station.getLocation();
 
         Unit unit;
         switch (type) {
             case AMBULANCE:
-                unit = new Ambulance();
+                unit = new Ambulance(location);
                 break;
             case POLICE_CAR:
-                unit = new PoliceCar();
+                unit = new PoliceCar(location);
                 break;
             case FIRE_ENGINE:
-                unit = new FireEngine();
+                unit = new FireEngine(location);
                 break;
             default:
                 throw new InvalidUnitException("Unit does not exist");

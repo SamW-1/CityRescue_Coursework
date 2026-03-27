@@ -9,17 +9,19 @@ abstract class Unit {
     public static int totalID = 1;
     public static final int MAX_UNITS = 50;
     private static Unit[] unitList = new Unit[MAX_UNITS];
+    private int[] location;
     private final int unitID;
     public UnitStatus status;
     protected final int ticksAtScene;
     public void move() {
         // Add implementation for unit movement
     }
-    public Unit(int ticksAtScene) {
+    public Unit(int ticksAtScene, int[] location) {
         unitID = totalID;
         totalID++;
         status = UnitStatus.IDLE;
         this.ticksAtScene = ticksAtScene;
+        this.location = location;
     }
     public abstract boolean canHandle(IncidentType type);
     public abstract int getTicksToResolve(int severity);
