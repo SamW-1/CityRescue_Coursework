@@ -1,6 +1,7 @@
 package cityrescue;
 
 import cityrescue.enums.IncidentType;
+import cityrescue.enums.UnitType;
 
 class Ambulance extends Unit {
     public Ambulance() {
@@ -13,5 +14,9 @@ class Ambulance extends Unit {
     @ Override
     public int getTicksToResolve(int severity) {
         return 0;
+    }
+    @ Override
+    public UnitType getUnitType() {
+        return UnitType.AMBULANCE;
     }
 }

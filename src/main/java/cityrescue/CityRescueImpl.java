@@ -170,8 +170,14 @@ public class CityRescueImpl implements CityRescue {
 
     @Override
     public String viewUnit(int unitId) throws IDNotRecognisedException {
-        // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (!Unit.isUnit(unitId)) { throw new IDNotRecognisedException("Unit does not exist"); }
+
+        Unit unit = Unit.getUnit(unitId);
+        Station station = Station.getStation(unit);
+
+        String returnString = "U#%d TYPE=%S HOME=%d LOC=(%d,%d) STATUS=%S INCIDENT=%d WORK=%d";
+
+        return String.format(returnString, unit.getID(), unit.getUnitType().toString()), station.getStationID(), ; 
     }
 
     @Override

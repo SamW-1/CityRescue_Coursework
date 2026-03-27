@@ -2,6 +2,7 @@ package cityrescue;
 
 import cityrescue.enums.IncidentType;
 import cityrescue.enums.UnitStatus;
+import cityrescue.enums.UnitType;
 
 
 abstract class Unit {
@@ -21,6 +22,7 @@ abstract class Unit {
     }
     public abstract boolean canHandle(IncidentType type);
     public abstract int getTicksToResolve(int severity);
+    public abstract UnitType getUnitType();
     public int getID() { return unitID; }
     public static int[] getUnitIDs() {
         int[] IDs = new int[totalID];
