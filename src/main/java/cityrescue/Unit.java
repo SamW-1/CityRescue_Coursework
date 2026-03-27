@@ -6,8 +6,9 @@ import cityrescue.enums.UnitType;
 
 
 abstract class Unit {
-    private static int totalID = 1;
-    private static Unit[] unitList = new Unit[100];
+    public static int totalID = 1;
+    public static final int MAX_UNITS = 50;
+    private static Unit[] unitList = new Unit[MAX_UNITS];
     private final int unitID;
     public UnitStatus status;
     protected final int ticksAtScene;

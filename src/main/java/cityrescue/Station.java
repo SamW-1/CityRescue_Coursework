@@ -1,7 +1,9 @@
 package cityrescue;
+
 public class Station {
-    static int totalID = 1;
-    private static Station[] stationList = new Station[100];
+    public static int totalID = 1;
+    public static final int MAX_STATIONS = 20;
+    private static Station[] stationList = new Station[MAX_STATIONS];
     private int stationID;
     private String name;
     private Unit[] units;

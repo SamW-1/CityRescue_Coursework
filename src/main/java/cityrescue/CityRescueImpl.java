@@ -10,7 +10,7 @@ import cityrescue.exceptions.InvalidLocationException;
 import cityrescue.exceptions.InvalidNameException;
 import cityrescue.exceptions.InvalidSeverityException;
 import cityrescue.exceptions.InvalidUnitException;
-
+import cityrescue.exceptions.CapacityExceededException;
 
 /**
  * CityRescueImpl (Starter)
@@ -61,10 +61,12 @@ public class CityRescueImpl implements CityRescue {
     @Override
     public int addStation(String name, int x, int y) throws InvalidNameException, InvalidLocationException {
         // TODO: implement
-        if (name == null || name == "") { throw new InvalidNameException("Inputted Name is blank"); }
+        if (name == null || name.isBlank()) { throw new InvalidNameException("Inputted Name is blank"); }
         if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {
             throw new InvalidLocationException("Invalid inputted location");
         }
+        if (Station.totalID >= Station.MAX_STATIONS) { throw new CapacityExceededException("Max Stations exceeded"); }
+
 
         Station newStation = new Station(name);
         map.addStation(newStation, x, y);
@@ -103,6 +105,8 @@ public class CityRescueImpl implements CityRescue {
         if (!Station.isStation(stationId)) { throw new IDNotRecognisedException("Station does not exist"); }
         Station station = Station.getStation(stationId);
         if (!station.hasCapacity()) { throw new IllegalStateException("Station doesn't have capacity"); }
+        if (Unit.totalID >= Unit.MAX_UNITS) { throw new CapacityExceededException("Max Units exceeded"); }
+
 
         Unit unit;
         switch (type) {
