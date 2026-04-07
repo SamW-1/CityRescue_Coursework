@@ -188,8 +188,10 @@ public class CityRescueImpl implements CityRescue {
     public int reportIncident(IncidentType type, int severity, int x, int y) throws InvalidSeverityException, InvalidLocationException {
         if (type == null) { throw new InvalidSeverityException("Type is null"); }
         if (severity < 1 || severity > 5) { throw new InvalidSeverityException("Severity must be between 1 and 5"); }
-        if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0) {throw new InvalidLocationException("Invalid inputted location");}
-            
+        if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0 || map.locationBlocked(x, y)) {throw new InvalidLocationException("Invalid inputted location");}
+        
+        Incident incident = new Incident();
+        return incident.getID();
     }
 
     @Override
