@@ -1,5 +1,6 @@
 package cityrescue;
 
+import cityrescue.enums.IncidentStatus;
 import cityrescue.enums.IncidentType;
 import cityrescue.enums.UnitStatus;
 import cityrescue.enums.UnitType;
@@ -17,6 +18,11 @@ import cityrescue.exceptions.InvalidUnitException;
  *
  * Your task is to implement the full specification.
  * You may add additional classes in any package(s) you like.
+ * 
+ * 
+ * CURRENT ISSUES
+ * Updating the simulation map for the locations of all Incidents, Units, Stations is not implemented
+ * Location coordinates are stored within individual classes but not reflected in the map
  */
 public class CityRescueImpl implements CityRescue {
 
@@ -193,15 +199,19 @@ public class CityRescueImpl implements CityRescue {
         if (severity < 1 || severity > 5) { throw new InvalidSeverityException("Severity must be between 1 and 5"); }
         if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0 || map.locationBlocked(x, y)) {throw new InvalidLocationException("Invalid inputted location");}
         
-        Incident incident = new Incident();
+        Incident incident = new Incident(x, y);
         Incident.addIncident(incident);
         return incident.getID();
     }       
 
     @Override
     public void cancelIncident(int incidentId) throws IDNotRecognisedException, IllegalStateException {
-        // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (!Incident.isIncident(incidentId)) { throw new IDNotRecognisedException("Incident does not exist"); }
+        Incident incident = Incident.getIncident(incidentId);
+        if (incident.status != IncidentStatus.REPORTED && incident.status != IncidentStatus.DISPATCHED) { throw new IllegalStateException("Incident must be REPORTED or DISPATCHED to cancel"); }
+
+        incident.status = IncidentStatus.CANCELLED;
+        Incident.RemoveIncident(incident);
     }
 
     @Override
