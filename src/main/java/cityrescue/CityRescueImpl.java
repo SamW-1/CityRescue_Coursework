@@ -3,6 +3,7 @@ package cityrescue;
 import cityrescue.enums.IncidentType;
 import cityrescue.enums.UnitStatus;
 import cityrescue.enums.UnitType;
+import cityrescue.exceptions.CapacityExceededException;
 import cityrescue.exceptions.IDNotRecognisedException;
 import cityrescue.exceptions.InvalidCapacityException;
 import cityrescue.exceptions.InvalidGridException;
@@ -10,7 +11,6 @@ import cityrescue.exceptions.InvalidLocationException;
 import cityrescue.exceptions.InvalidNameException;
 import cityrescue.exceptions.InvalidSeverityException;
 import cityrescue.exceptions.InvalidUnitException;
-import cityrescue.exceptions.CapacityExceededException;
 
 /**
  * CityRescueImpl (Starter)
@@ -181,7 +181,10 @@ public class CityRescueImpl implements CityRescue {
         String returnString = "U#%d TYPE=%S HOME=%d LOC=(%d,%d) STATUS=%S INCIDENT=%d WORK=%d";
 
         // NEED TO ADD INCIDENT INFORMATION: come back once incident class and functionality has been implemented
-        return String.format(returnString, unit.getID(), unit.getUnitType().toString()), station.getStationID(), location[0], location[1], unit.status.toString(); 
+        // Currently, there is no relation between Unit and Incident: Need to track which units are responding to which incidents
+        //  either within solely the Unit or Incident class for good design principles
+
+        return String.format(returnString, unit.getID(), unit.getUnitType().toString(), station.getStationID(), location[0], location[1], unit.status.toString()); 
     }
 
     @Override
@@ -191,8 +194,9 @@ public class CityRescueImpl implements CityRescue {
         if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0 || map.locationBlocked(x, y)) {throw new InvalidLocationException("Invalid inputted location");}
         
         Incident incident = new Incident();
+        Incident.
         return incident.getID();
-    }
+    }       
 
     @Override
     public void cancelIncident(int incidentId) throws IDNotRecognisedException, IllegalStateException {
