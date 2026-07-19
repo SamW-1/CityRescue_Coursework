@@ -13,4 +13,5 @@ public class Incident {
         status = IncidentStatus.REPORTED;
     }
     public int getID() { return incidentID; }
+    public static void addIncident(Incident incident) { incidentList[totalID-1] = incident; }
 }

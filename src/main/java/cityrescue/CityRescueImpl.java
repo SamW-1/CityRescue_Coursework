@@ -194,7 +194,7 @@ public class CityRescueImpl implements CityRescue {
         if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0 || map.locationBlocked(x, y)) {throw new InvalidLocationException("Invalid inputted location");}
         
         Incident incident = new Incident();
-        Incident.
+        Incident.addIncident(incident);
         return incident.getID();
     }       
 
