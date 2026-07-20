@@ -23,6 +23,8 @@ import cityrescue.exceptions.InvalidUnitException;
  * CURRENT ISSUES
  * Updating the simulation map for the locations of all Incidents, Units, Stations is not implemented
  * Location coordinates are stored within individual classes but not reflected in the map
+ * 
+ * Next overall steps: Begin component testing (Use Ai to make sure no functionality is missing)
  */
 public class CityRescueImpl implements CityRescue {
 
@@ -169,6 +171,7 @@ public class CityRescueImpl implements CityRescue {
         if (outOfService && unit.status != UnitStatus.IDLE) { throw new IllegalStateException("Unit must be IDLE to toggle out of Service"); }
 
         unit.status = UnitStatus.OUT_OF_SERVICE;
+        Unit.removeUnit();
     }
 
     @Override
@@ -199,7 +202,7 @@ public class CityRescueImpl implements CityRescue {
         if (severity < 1 || severity > 5) { throw new InvalidSeverityException("Severity must be between 1 and 5"); }
         if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0 || map.locationBlocked(x, y)) {throw new InvalidLocationException("Invalid inputted location");}
         
-        Incident incident = new Incident(x, y);
+        Incident incident = new Incident(severity, x, y);
         Incident.addIncident(incident);
         return incident.getID();
     }       
@@ -212,24 +215,30 @@ public class CityRescueImpl implements CityRescue {
 
         incident.status = IncidentStatus.CANCELLED;
         Incident.RemoveIncident(incident);
+        incident.releaseUnit();
     }
 
     @Override
     public void escalateIncident(int incidentId, int newSeverity) throws IDNotRecognisedException, InvalidSeverityException, IllegalStateException {
-        // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (!Incident.isIncident(incidentId)) { throw new IDNotRecognisedException("Incident does not exist"); }
+
+        Incident incident = Incident.getIncident(incidentId);
+
+        if (newSeverity < 1 || newSeverity > 5) { throw new InvalidSeverityException("Severity must be between 1 and 5 (inclusive)"); }
+        if (incident.status == IncidentStatus.RESOLVED || incident.status == IncidentStatus.CANCELLED) { throw new IllegalStateException("Incident cannot be Cancelled or Resolved"); }
+
+        incident.severity = newSeverity;
     }
 
     @Override
     public int[] getIncidentIds() {
-        // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Incident.getIncidentIDs();
     }
 
     @Override
     public String viewIncident(int incidentId) throws IDNotRecognisedException {
-        // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (!Incident.isIncident(incidentId)) { throw new IDNotRecognisedException("Incident does not exist"); }
+        
     }
 
     @Override

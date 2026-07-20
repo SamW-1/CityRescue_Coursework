@@ -7,6 +7,7 @@ import cityrescue.enums.UnitType;
 
 abstract class Unit {
     public static int totalID = 1;
+    private static int unitCount = 0;
     public static final int MAX_UNITS = 50;
     private static Unit[] unitList = new Unit[MAX_UNITS];
     private int[] location;
@@ -19,6 +20,7 @@ abstract class Unit {
     public Unit(int ticksAtScene, int[] location) {
         unitID = totalID;
         totalID++;
+        unitCount++;
         status = UnitStatus.IDLE;
         this.ticksAtScene = ticksAtScene;
         this.location = location;
@@ -29,9 +31,13 @@ abstract class Unit {
     public int getID() { return unitID; }
     public int[] getLocation() { return location; }
     public static int[] getUnitIDs() {
-        int[] IDs = new int[totalID];
+        int[] IDs = new int[unitCount];
+        int count = 0;
         for (int i = 0; i < totalID; i++) {
-            IDs[i] = unitList[i].getID();
+            if (unitList[i].status != UnitStatus.OUT_OF_SERVICE) { 
+                IDs[count] = unitList[i].getID(); 
+                count++;
+            }
         }
         return IDs;
     }
@@ -47,5 +53,8 @@ abstract class Unit {
             if (unit.getID() == ID) { return unit; }
         }
         return null;
+    }
+    public static void removeUnit() {
+        unitCount -= 1;
     }
 }
