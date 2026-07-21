@@ -238,7 +238,10 @@ public class CityRescueImpl implements CityRescue {
     @Override
     public String viewIncident(int incidentId) throws IDNotRecognisedException {
         if (!Incident.isIncident(incidentId)) { throw new IDNotRecognisedException("Incident does not exist"); }
-        
+
+        Incident incident = Incident.getIncident(incidentId);
+        String returnString = "I#1 TYPE=FIRE SEV=4 LOC=(3,1) STATUS=IN_PROGRESS UNIT=2";
+        return returnString;
     }
 
     @Override
