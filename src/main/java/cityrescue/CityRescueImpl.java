@@ -143,6 +143,7 @@ public class CityRescueImpl implements CityRescue {
         unit.status = UnitStatus.OUT_OF_SERVICE;
         Station station = Station.getStation(unit);
         station.removeUnit(unit);
+        Unit.removeUnit();
     }
 
     @Override
@@ -170,8 +171,12 @@ public class CityRescueImpl implements CityRescue {
 
         if (outOfService && unit.status != UnitStatus.IDLE) { throw new IllegalStateException("Unit must be IDLE to toggle out of Service"); }
 
-        unit.status = UnitStatus.OUT_OF_SERVICE;
-        Unit.removeUnit();
+        if (outOfService) {
+            unit.status = UnitStatus.OUT_OF_SERVICE;
+        }
+        else {
+            unit.status = UnitStatus.IDLE;
+        }
     }
 
     @Override
@@ -186,6 +191,7 @@ public class CityRescueImpl implements CityRescue {
         Unit unit = Unit.getUnit(unitId);
         int[] location = unit.getLocation();
         Station station = Station.getStation(unit);
+        Incident incident = Incident.findRespondingUnit(unit);
 
         String returnString = "U#%d TYPE=%S HOME=%d LOC=(%d,%d) STATUS=%S INCIDENT=%d WORK=%d";
 
@@ -193,7 +199,7 @@ public class CityRescueImpl implements CityRescue {
         // Currently, there is no relation between Unit and Incident: Need to track which units are responding to which incidents
         //  either within solely the Unit or Incident class for good design principles
 
-        return String.format(returnString, unit.getID(), unit.getUnitType().toString(), station.getStationID(), location[0], location[1], unit.status.toString()); 
+        return String.format(returnString, unit.getID(), unit.getUnitType().toString(), station.getStationID(), location[0], location[1], unit.status.toString(), incident.getID()); 
     }
 
     @Override
@@ -202,7 +208,7 @@ public class CityRescueImpl implements CityRescue {
         if (severity < 1 || severity > 5) { throw new InvalidSeverityException("Severity must be between 1 and 5"); }
         if (x >= map.getWidth() || x < 0 || y >= map.getHeight() || y < 0 || map.locationBlocked(x, y)) {throw new InvalidLocationException("Invalid inputted location");}
         
-        Incident incident = new Incident(severity, x, y);
+        Incident incident = new Incident(type, severity, x, y);
         Incident.addIncident(incident);
         return incident.getID();
     }       
@@ -240,8 +246,9 @@ public class CityRescueImpl implements CityRescue {
         if (!Incident.isIncident(incidentId)) { throw new IDNotRecognisedException("Incident does not exist"); }
 
         Incident incident = Incident.getIncident(incidentId);
-        String returnString = "I#1 TYPE=FIRE SEV=4 LOC=(3,1) STATUS=IN_PROGRESS UNIT=2";
-        return returnString;
+        String returnString = "I#%d TYPE=%s SEV=%d LOC=(%d,%d) STATUS=&s UNIT=%d";
+        int[] location = incident.getLocation();
+        return String.format(returnString, incident.getID(), incident.type.toString(), incident.severity, location[0], location[1], incident.status.toString(), incident.getUnit().getID());
     }
 
     @Override

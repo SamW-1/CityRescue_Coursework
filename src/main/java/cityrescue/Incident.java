@@ -1,6 +1,7 @@
 package cityrescue;
 
 import cityrescue.enums.IncidentStatus;
+import cityrescue.enums.IncidentType;
 import cityrescue.enums.UnitStatus;
 public class Incident {
     public static int totalID = 1;
@@ -11,9 +12,11 @@ public class Incident {
     private int[] location;
     private Unit respondingUnit;
     public IncidentStatus status;
+    public IncidentType type;
     public int severity;
-    public Incident(int severity, int x, int y) {
+    public Incident(IncidentType type, int severity, int x, int y) {
         this.severity = severity;
+        this.type = type;
         incidentID = totalID;
         totalID++;
         incidentCount++;
@@ -21,6 +24,8 @@ public class Incident {
         location = new int[] { x, y };
     }
     public int getID() { return incidentID; }
+    public int[] getLocation() { return location; }
+    public Unit getUnit() { return respondingUnit; }
     public static void addIncident(Incident incident) { incidentList[totalID-1] = incident; }
     public static boolean isIncident(int ID) {
         for (Incident incident : incidentList) {
@@ -56,5 +61,11 @@ public class Incident {
             }
         }
         return IDs;
+    }
+    public static Incident findRespondingUnit(Unit unit) {
+        for (Incident incident : incidentList) {
+            if (incident.respondingUnit == unit) { return incident; }
+        }
+        return null;
     }
 }
