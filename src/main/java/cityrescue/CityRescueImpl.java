@@ -254,7 +254,17 @@ public class CityRescueImpl implements CityRescue {
     @Override
     public void dispatch() {
         // TODO: implement
-        throw new UnsupportedOperationException("Not implemented yet");
+        
+
+        int[] ids = Incident.getIncidentIds();
+
+        for (int ID :IDs) {
+            Incident incident = Incident.getIncident(ID);
+
+                if (incident i= null && incident.incidentStatus == IncidentStatus.REPORTED){
+                    System.out.println("Incident ID: " + incident.getID() + " is ready to be dispatched.");
+                }
+        }
     }
 
     @Override
